@@ -1,0 +1,65 @@
+---
+title: "Baltimore Crime Map"
+output: html_document
+---
+**Introduction:**
+The goal of this project is to try to code up a simple system that reads and processes crime record data in the Baltimore Police Department, and visualizes crime location patterns depending on userspecified conditions.
+
+**Download, unzip and read the shape file: **
+```{r Download, unzip and read the shape file}
+library(maps)
+library(maptools)
+url_zip <- 'https://dl.dropboxusercontent.com/s/chyvmlrkkk4jcgb/school_distr.zip'
+if(!file.exists('school_distr.zip')) download.file(url_zip, 'school_distr.zip')    
+# download file as zip
+unzip('school_distr.zip')   # unzip in the default folder
+schdstr_shp <- readShapePoly('school.shp')  # read shape file
+xlim <- schdstr_shp@bbox[1,]
+ylim <- schdstr_shp@bbox[2,]
+```
+
+**Download and load the crime csv data: **
+```{r Download and load the crime csv data}
+url_csv <- 'https://dl.dropboxusercontent.com/s/4hg5ffdds9n2nx3/baltimore_crime.csv'
+if(!file.exists('baltimore_crime.csv')) download.file(url_csv, 'baltimore_crime.csv')
+df <- read.csv('baltimore_crime.csv', stringsAsFactors = F)
+```
+
+**Transform dates and time variables depending on what we need:**
+```{r Transform dates and time variables depending on what you need:}
+typeof(df$CrimeDate)
+df$year<-substr(df$CrimeDate,7,10)
+df$month<-substr(df$CrimeDate,1,2)
+df$day<-substr(df$CrimeDate,4,5)
+df$CrimeDate <- as.Date(df$CrimeDate,"%m/%d/%Y")
+df$year <- format(df$CrimeDate,"%Y")
+df$month <- format(df$CrimeDate,"%m")
+df$day <- format(df$CrimeDate,"%d")
+df$time <- as.numeric(substr(df$CrimeTime,1,2))
+```
+
+**Transform coordinates data into numeric:**
+In the original data, there is a column called “Location1”. This variable indicate pairs of “(latitude,longitude)”. What I am doing below is to obtain two numeric variables of longitude and latitude.
+```{r Transform coordinates data into numeric}
+df$Location1 <- gsub("[()]", "", df$Location1)
+getla <- function(x){
+  grep("\\d+",unlist(strsplit(x,","))[1],value=T)
+}   #just use the general idea and replace x with the specific one when applying the function
+
+getlo <- function(x){
+  grep("\\-\\d+",unlist(strsplit(x,","))[2],value=T)
+}
+df$latitude <- sapply(df$Location1,function(x) getla(x)) # work on each element
+df$longitude <- sapply(df$Location1,function(x) getlo(x))
+```
+
+**Summarize geographic and time patterns in assault-class of crimes:**
+Summarize the geographic and time patterns of crimes with the keyword “ASSAULT” in it.In terms of time patterns, split a day into 4 sections: morning (6:00 am to 12:00 pm), afternoon (12:00 pm to 6:00 pm), evening (6:00 pm to 12:00 am) and mid-night(12:00 am to 6:00 am), and separately plot the 4 geographic patterns.
+```{r  Summarize geographic and time patterns in assault-class of crimes}
+par(mfrow = c(2, 2))
+des <- grep("ASSAULT",df$Description,value=T)
+for (t in c(0,6,12,18)){
+    plot(schdstr_shp, axes = T)
+    points(df$longitude[df$Description %in% des&df$time<t+6],df$latitude[df$Description %in% des&df$time<t+6], type = "p", col=rgb(0,0,1,0.05),pch=19,cex=0.3)
+}
+```

@@ -1,0 +1,14 @@
+# main links links
+main:
+
+  - title: "Story of My Life"
+    url: /life/
+
+  - title: "Portfolio"
+    url: /portfolio/
+
+  - title: "Presentation"
+    url: /presentation/
+
+  - title: "CV"
+    url: /cv/

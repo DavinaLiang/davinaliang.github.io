@@ -1,0 +1,135 @@
+---
+title: "Customer Targeting Study"
+output: html_document
+---
+**Introduction:**
+The general goal of this task is that I try to distinguish potential high-value consumers and separate them from low-value consumers. 
+[Recency], [Frequency] and [Monetary value (RFM)] are 3 factors that can calculate and use to do the targeting.
+The dataset this project use is from a company called CDNOW. I will figure out the potential value of a consumer in a given month, using only historical data prior to this month. I will then classify the sample by the “RFM index” I generated and see how much it is related to actual consumer spending.
+
+**Read and load trial data: **
+```{r Read and load trial data}
+url <- 'https://dl.dropboxusercontent.com/s/xxfloksp0968mgu/CDNOW_sample.txt'
+if (!file.exists('CDNOW_sample.txt')) {     # check whether data exists in local folder (prevents downloading every time)
+    download.file(url, 'CDNOW_sample.txt')
+}
+df.raw <- read.fwf('CDNOW_sample.txt', width = c(6, 5, 9, 3, 8), stringsAsFactors = F)  # load data
+df.raw[1] <- NULL 
+# drop old id
+colnames(df.raw) <- c("id", "date", "qty", "expd")
+head(df.raw)
+```
+
+**Generate year and month:**
+In the raw data, we only have date column, which is hard to deal with, so we extract year and month from it and create two new columns [year] and [month]
+```{r Generate year and month}
+library("lubridate")
+df.raw$date <- as.Date(as.character(df.raw$date),"%Y%m%d")
+df.raw$year <- year(df.raw$date)
+df.raw$month <- month(df.raw$date)
+```
+
+**Aggregate into monthly data with number of trips and total expenditure:**
+The Next step is to aggregate the data into individual-month level. During this aggregation process, we should sum up quantity and expenditure for each
+consumer in each month.
+```{r Aggregate into monthly data with number of trips and total expenditure}
+qty <- aggregate(df.raw$qty,by=list(df.raw$id,df.raw$year,df.raw$month),FUN=sum)
+colnames(qty) <- c("id","year","month","qty")
+expd <- aggregate(df.raw$expd,by=list(df.raw$id,df.raw$year,df.raw$month),FUN=sum)
+colnames(expd) <- c("id","year","month","expd")
+trips <- aggregate(df.raw$qty,by=list(df.raw$id,df.raw$year,df.raw$month),FUN=length)
+colnames(trips) <- c("id","year","month","trips")
+df.t <- merge(qty,expd,by=c("id","year","month"),all.x = T)
+df.new <- merge(df.t,trips,by=c("id","year","month"),all.x = T)
+df.new$id <- as.numeric(df.new$id)
+df.new <- df.new[order(df.new$id),]
+```
+
+**Generate a table of year-months, merge, replace no trip to zero:**
+```{r Generate a table of year-months, merge, replace no trip to zero}
+max(df.new$id)
+date1 <- expand.grid(id=1:1000,year=1997,month=1:12)
+date2 <- expand.grid(id=1:1000,year=1998,month=1:6)
+date <- rbind(date1,date2)
+df.all <- merge(date,df.new,by=c("year","month","id"),all.x = T)
+df.all$qty[is.na(df.all$qty)] <- 0
+df.all$expd[is.na(df.all$expd)] <- 0
+df.all$trips[is.na(df.all$trips)] <- 0
+df.all <- df.all[order(df.all$id),]
+```
+
+**Now we should have the dataset we need after finish cleaning and transforming the raw data.**
+
+**Recency:**
+Recency is defined as the number of months since the last month with purchase. 
+An example is, if an individual has been to the store in month 1, 2 and 5, her recency is NA in month 1 (because we do not know anything before the data starts), 1 in
+month 2, 1 in month 3, 2 in month 4, 3 in month 5, and 1 in month 6.
+```{r Recency}
+df.all$monthnum <- rep(1:18,times=1000)
+df.all$recency[df.all$monthnum==1] <- NA
+for(i in 1:1000){
+    for(m in 2:18){
+      if(df.all$trips[df.all$id==i & df.all$monthnum==m-1]==0){
+        df.all$recency[df.all$id==i&df.all$monthnum==m] <- df.all$recency[df.all$id==i&df.all$monthnum==m-1]+1}
+      if(df.all$trips[df.all$id==i & df.all$monthnum==m-1]!=0){
+      df.all$recency[df.all$id==i & df.all$monthnum==m] <- 1}
+  }
+}
+```
+
+**Frequency:**
+Frequency is defined as the total number of trips a given individual made in the previous quarter.A quarter is defined as one of Jan-Mar, Apr-Jun, Jul-Sep, Oct-Dec. If the observation is in the very first of this individual, we assign frequency to NA.
+```{r Frequency}
+df.all$quarter <- rep(rep(c(1,2,3,4,5,6),each=3),times=1000)
+df.all$frequency[df.all$quarter==1] <- NA
+for(i in 1:1000){
+  for(q in 2:6)
+    df.all$frequency[df.all$id==i&df.all$quarter==q] <- sum(df.all$trips[df.all$id==i&df.all$quarter==q-1])
+}
+```
+
+**Money Value:**
+Monetary value is defined as –still using historical data– the average monthly expenditure for aconsumer, in the previous months when she purchased something. 
+For example, in month 1, the consumer came to the store and spent in total 15 dollars. Then, in month 2, her monetary value is 15. In month 2, the consumer came again and spent a total of 30 dollars. Then her monetary value in month 3 is the average, i.e. (15+30)/2 = 22.5. She did not come in month 3 and 4, so her monetary value did not change. Finally, she came in month 5 and spent 20, and thus her monetary value is (15+30+20)/3 = 21.7.
+```{r Money Value}
+df.all$monvalue[df.all$monthnum==1] <- NA
+for(i in 1:1000){
+  for(m in 2:18){
+    if(df.all$expd[df.all$id==i&df.all$monthnum==m-1]==0){
+      df.all$monvalue[df.all$id==i&df.all$monthnum==m]<-df.all$monvalue[df.all$id==i&df.all$monthnum==m-1]
+    }
+    else{
+      df.all$monvalue[df.all$id==i&df.all$monthnum==m]<- mean(df.all$expd[df.all$id==i&df.all$monthnum<m&df.all$expd!=0])
+    }
+  }
+}
+```
+
+**Now we finished creating three factors that help us evaluate the value of consumers. Then we will start targeting customers.**
+
+**RFM Index:**
+An RFM index is an weighted sum of the 3 measures, for each individual i in month t:
+RFMit = b1Rit +b2Fit +b3Mit
+For now let’s take b1 = -0.05, b2 = 3.5 and b3 = 0.05. Note that if a consumer is considered “high value” if she has low recency, or high frequency, or high onetary value.
+```{r RFM Index}
+b1 <- -0.05
+b2 <- 3.5
+b3 <- 0.05
+
+df.all$index <- b1*df.all$recency + b2*df.all$frequency + b3*df.all$monvalue
+```
+
+**Validation:**
+Now we sort our sample according to the RFM index and split it into 10 even-sized portions.The high RFM parts refer to individuals that are more valuable than the low RFM parts. 
+Plot the average spending by group and see which groups of consumers do we want to target.
+```{r Validation}
+df.all<-df.all[order(df.all$index),]
+df.all2 <- df.all[!is.na(df.all$index),]
+
+bin <- quantile(df.all2$index,seq(0,1,0.1))
+df.all2$bin <- cut(df.all2$index,bin, labels = F,include.lowest=T)
+df.plot <- aggregate(df.all2$expd,by=list(df.all2$bin),FUN=mean)
+colnames(df.plot)[1]<-"i"
+df.plot
+barplot(df.plot$x~df.plot$i,xlab="deciles in the RFM index",ylab="average expenditure",main="Average expenditure by deciles in the RFM index")
+```

@@ -1,0 +1,309 @@
+---
+title: 'Toy Horse Product Lines'
+date: "2/2/2020"
+output:
+  pdf_document: default
+  html_document: default
+---
+
+```{r setup, include=FALSE}
+knitr::opts_chunk$set(echo = TRUE)
+```
+
+## Setup
+
+```{r Setup Environment}
+rm(list = ls())
+
+# Set up environment and load datasets
+dir="E:/Studying/Simon/Classes/GBA424 - Analytics Design/Assignments/Assignment 3"
+setwd(dir)
+load("GBA424 - Toy Horse Case Data.Rdata")
+require("cluster")
+require("fpc")
+require("factoextra")
+require("gridExtra")
+library(cluster)
+library(fpc)
+library(factoextra)
+library(gridExtra)
+library(reshape)
+```
+
+
+## Part A
+
+```{r PART A}
+################################
+#            PART A            #
+################################
+
+## Use regression to estimate the conjoint model at the individual level
+
+# Create new dataset for part A
+indi_data = conjointData
+
+# Subset the data to train the model
+indi_training = indi_data[!(is.na(indi_data$ratings)),]
+indi_missing = indi_data[is.na(indi_data$ratings),]
+
+# Store the coefficients
+numIDs = length(unique(conjointData$ID)) # Number of respondents
+partworths1 = data.frame(ID = 1:numIDs, intercept = NA, price = NA, 
+                         size = NA, motion = NA, style = NA)
+indi_pred = list() # List that saves predicted ratings of missing profiles
+for (num in 1:numIDs){
+  data.training.sub = subset(indi_training, ID == num)
+  data.missing.sub = subset(indi_missing, ID == num)
+  lm = lm(ratings~price+size+motion+style,data = data.training.sub)
+  partworths1[num, 2:6] = lm$coefficients
+  indi_pred = append(indi_pred,predict(lm,data.missing.sub))
+}
+
+# Replace NA ratings with predicted ratings for missing profiles
+indi_data$ratings[is.na(indi_data$ratings)] = unlist(indi_pred)
+```
+Part-utilities of the conjoint model at the individual level are stored in the 'partworths1'. The NAs in the survey data are replaced by the predictions for missing profiles.
+
+
+## Part B
+
+```{r PART B}
+################################
+#            PART B            #
+################################
+source("ConjointCode.R")
+
+## Evaluate number of clusters to use on data with visualizations
+checkClust = clustTest(partworths1[,2:6],print=TRUE,scale=TRUE,maxClusts=10,
+                       seed=12345,nstart=20,iter.max=100)
+clusts = runClusts(partworths1[,2:6],c(2,3,4,5),print=TRUE,maxClusts=4,
+                   seed=12345,nstart=20,iter.max=100)
+```
+
+The optimal number of clusters is 3, where the average silhouette width is the highest, and the customer can be separated in to 3 non-overlapped groups of people with different preferences.
+
+```{r}
+## Plot clusters with nClusters = 3
+plotClust(clusts[[1]][[2]],partworths1)
+```
+
+```{r}
+# Cluster means
+partworths1_seg = as.data.frame(clusts[[1]][[2]]$centers)
+partworths1_seg
+```
+In the post-hoc segmentation, we use 3 clusters. The sign and magnitude of attribute coefficients indicate the preference of consumers within certain attributes, with positive sign meaning consumers prefer that attribute. We can use this result to support our product line decision.
+
+**Ideal product for each segment**  
+Segment 1: prefer lower price, bigger size, bouncing motion and racing style. → Profile 4  
+Segment 2: preder lower price, smaller size, rocking motion and glamour style. → Profile 14  
+Segment 3: preder lower price, bigger size, rocking motion and glamour style. → Profile 16  
+
+## Part C
+
+```{r PART C}
+################################
+#            PART C            #
+################################
+
+# Create new dataset for part C
+seg_data = conjointData
+
+## Conduct a priori segmentation using the variabkes gender and age
+demo = as.data.frame(lapply(respondentData,as.factor)) # demographic info
+
+# Create 3 segmentations by age, by gender, and by age & gender 
+demo_seg1 = kmeans(x=demo[,2:3], centers = 4, nstart = 1000) # age & gender (4 clusters)
+demo_seg2 = kmeans(x=demo[,2], centers = 2, nstart = 1000) # age (2 clusters)
+demo_seg3 = kmeans(x=demo[,3], centers = 2, nstart = 1000) # gender (2 clusters)
+
+# Merge cluster id with the original conjoint data
+cluster_id = data.frame(ID = demo$ID,
+                        seg1=factor(demo_seg1$cluster),
+                        seg2=factor(demo_seg2$cluster),
+                        seg3=factor(demo_seg3$cluster))
+seg_data = merge(seg_data, cluster_id,by = "ID", all.x = T)
+
+# Subset training and missing data
+seg_training = seg_data[!(is.na(seg_data$ratings)),]
+seg_missing = seg_data[is.na(seg_data$ratings),]
+```
+
+To test whether priori segmentations affect part-utilities, we run regressions with interactions of the segment dummies with each attribute.
+
+**Segmentation 1: By age and gender**
+```{r}
+# Segmentation 1 by age and gender
+summary(lm(ratings~price+size+motion+style+
+             price*seg1+size*seg1+
+             motion*seg1+style*seg1,
+           data=seg_training))[[4]]
+```
+The interaction coefficients between segmentations and attributes are not entirely significant, so we consider testing whether gender or age is meaningful for business segmentation.
+
+**Segmentation 2: By age**
+```{r}
+# Segmentation 2 by age
+summary(lm(ratings~price+size+motion+style+
+             price*seg2+size*seg2+
+             motion*seg2+style*seg2,
+           data=seg_training))[[4]]
+```
+The segmentation here only affects part-utilities of size attribute.
+
+**Segmentation 3: By gender**
+```{r}
+# Segmentation 3 by gender
+summary(lm(ratings~price+size+motion+style+
+             price*seg3+size*seg3+
+             motion*seg3+style*seg3,
+           data=seg_training))[[4]]
+```
+The interation coefficients are significant in segmentations by gender.
+
+**Conclusion**  
+From the significant effect of gender segmentation to all the four attributes, we can safely conclude that gender is the most meaningful factor to use for a priori segmentation. Meanwhile, age does not play such an important role as gender with insignificant effects to price and style.  
+
+We will use only **gender** to do priori demographic segmentation.
+
+```{r}
+## Segment-level regressions
+partworths2_seg = data.frame(cluster = 1:2, intercept = NA, price = NA, 
+                             size = NA, motion = NA, style = NA) 
+for (seg in 1:2){
+  data.sub = subset(seg_training, seg3 == seg)
+  lm = lm(ratings~price+size+motion+style, data=data.sub)
+  partworths2_seg[seg, 2:6] = lm$coefficients
+}
+partworths2_seg
+```
+
+We'll only get 2 sets of part-utilities instead of 200. But at least one set of part-utilities for attributes varies significantly across segments, and can be used for target different optimal products.
+
+**Ideal product for each segment**  
+Segment 1: prefer lower price, bigger size, bouncing motion and racing style. → Profile 4  
+Segment 2: preder lower price, bigger size, rocking motion and glamour style. → Profile 16
+
+## Part D
+
+```{r}
+#################################
+#            PART D             #
+#################################
+
+# Prepare data for analysis
+ratingData = cast(indi_data, ID ~ profile, value="ratings")
+ratingData = ratingData[, -1] # Remove the ID column
+
+# Function to calculate market share and deal with tie decisions
+simFCSharesTie = function(scen,data,ascend=FALSE){
+    inmkt = data[,scen]
+    if(ascend){
+    bestOpts = apply(inmkt,1,min)
+    } else {
+    bestOpts = apply(inmkt,1,max)
+    }
+    
+    decisions = inmkt == bestOpts
+    decisionsTie = decisions / rowSums(decisions)
+    mkShare = colSums(decisionsTie)/sum(decisionsTie)
+    mkShare
+}
+```
+
+
+**Set up scenarios**
+
+Our current products' profile IDs are 5 and 13, and the competitor's profile ID is 7. We will simulate the scenarios in which we launch ideal products from part B and part C, considering the competitor's reponse by reducing his price.
+
+Senarios:
+
+| Scenario      | Our Products | Competitor's Product |
+|:-------------:|:------------:|:--------------------:|
+| 1 (Original)  | 5, 13        | 7                    |
+| 2 (Part B)    | 4, 14, 16    | 7                    |
+| 3 (Part B)    | 4, 14, 16    | 8                    |
+| 4 (Part C)    | 4, 16        | 7                    |
+| 5 (Part C)    | 4, 16        | 8                    |
+| 6             | 14, 16       | 7                    |
+| 7             | 14, 16       | 8                    |
+
+```{r}
+## Set up scenarios
+scens = list()
+scens[[1]]=c(5,13,7)
+scens[[2]]=c(4,14,16,7)
+scens[[3]]=c(4,14,16,8)
+scens[[4]]=c(4,16,7)
+scens[[5]]=c(4,16,8)
+scens[[6]]=c(14,16,7)
+scens[[7]]=c(14,16,8)
+
+## Market Share
+sapply(scens,simFCSharesTie,data=ratingData, ascend=FALSE)
+```
+In scenario 2, 4, 6, the competitor's share decreases tremendously so we assume that he will decrease his price in response (i.e., changing from profile 7 to profile 8). Hence we remove these scenarios and move forward with scenario 1, 3, 5, 7. After simulating the market share, we will simulate short-term and long-term profitability.
+
+```{r}
+## Simulate profitability
+# Variable cost
+variableCost = profilesData
+variableCost$varCost[variableCost$size==0 & variableCost$motion==1] = 33 # 18" Rocking
+variableCost$varCost[variableCost$size==1 & variableCost$motion==1] = 41 # 26" Rocking
+variableCost$varCost[variableCost$size==0 & variableCost$motion==0] = 21 # 18" Bouncing
+variableCost$varCost[variableCost$size==1 & variableCost$motion==0] = 29 # 26" Bouncing
+
+# Function to calculate profitability over years
+profitFunc = function(scen, data, year=1) {
+    marketShares = simFCSharesTie(scen, data, ascend=FALSE)
+    
+    ourProducts = scen[-length(scen)] # exclude competitor's share
+    ourMarketShare = marketShares[1:length(ourProducts)]
+    
+    quantity = ourMarketShare*4000
+    price = profilesData$priceLabel[profilesData$profile %in% ourProducts]*100/125
+    varCost = variableCost$varCost[variableCost$profile %in% ourProducts]
+    fixCost = 20000*length(ourProducts)*year +
+      sum(!(ourProducts %in% c(5, 13, 6, 14)))*1/3*20000
+    
+    margin = (price-varCost)*quantity
+    profit = sum(margin)*year - fixCost
+    results = list(profit, margin)
+    results
+}
+```
+
+
+First we calculate annual margin for each product in each scenario.
+```{r}
+# Annual margin for each product 
+productMargin = lapply(scens[c(1, 3, 5, 7)],
+                       function (x) profitFunc(x,
+                                               data=ratingData,
+                                               year=1)[[2]])
+productMargin
+```
+
+Then we look at overall profitability of the company over years.
+```{r}
+# Calculate overall profit
+profitData = matrix(nrow=10, ncol=4)
+colnames(profitData) = c("'5,13,7'", "'4,14,16,8'", "'4,16,8'", "'14,16,8'")
+rownames(profitData) = paste("Year", 1:10)
+
+for (year in 1:10) {
+  profitData[year, ] = sapply(scens[c(1, 3, 5, 7)],
+                              function (x) profitFunc(x,
+                                                      data=ratingData,
+                                                      year=year)[[1]])
+}
+
+profitData
+```
+
+Scenario 3 (2nd column), in which we sell profile 4, 14, 16 and the competitor sell profile 8, yields the highest profit both in short term and long term.
+```{r}
+apply(profitData, 1, which.max)
+```
+
