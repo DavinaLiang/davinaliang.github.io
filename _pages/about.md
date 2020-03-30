@@ -11,5 +11,5 @@ redirect_from:
 <br />
 *Check out my [Portfolio](/portfolio.md)*
 
-[Play Music](/files/lo.mp3)
+![](/images/play.png){:height="7%" width="7%"}[Play the Music](/files/lo.mp3)
 ![](/images/street.JPG)
