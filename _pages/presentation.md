@@ -26,7 +26,7 @@ author_profile: true
 
 **National Chain Retailer Attraction Plan (City of Rochester)**
 <br />
-![](/images/cofr.png)
+![](/images/cr.png)
 
 {% if author.googlescholar %}
   You can also find my articles on <u><a href="{{author.googlescholar}}">my Google Scholar profile</a>.</u>
