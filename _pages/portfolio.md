@@ -49,18 +49,10 @@ author_profile: true
 ## Business Analytics Projects
 
 ---
-[**Customer Targeting Study**](/files/customer/Customer_Targeting2)
-[![Open the notebook](https://img.shields.io/badge/Jupyter-Notebook-blueviolet?logo=Jupyter)](https://davinaliang.github.io/files/customer/Customer_Targeting2)
-[![Find more on Githhub](https://img.shields.io/badge/GitHub-GitHub-ff96b4?logo=Github)](https://github.com/DavinaLiang/DavinaLiang.github.io/blob/master/files/customer/Customer_Targeting.Rmd)
-- The general goal of this task is to distinguish potential high-value consumers and separate them from low-value consumers.
-![](/images/Screen Shot 2019-09-20 at 16.01.41.png)
-
----
-[**Baltimore Crime Map**](/files/crime/Crime)
-[![Open the notebook](https://img.shields.io/badge/Jupyter-Notebook-blueviolet?logo=Jupyter)](https://davinaliang.github.io/files/crime/Crime)
-[![Find more on Githhub](https://img.shields.io/badge/GitHub-GitHub-ff96b4?logo=Github)](https://github.com/DavinaLiang/DavinaLiang.github.io/blob/master/files/crime/Crime_Codes.Rmd)
-- The goal of this project is to code up a simple system that reads and processes crime record data in the Baltimore Police Department, and visualizes crime location patterns depending on userspecified conditions.
-![](/images/Screen Shot 2019-09-22 at 13.21.42.png)
+[**National Chain Retailer Attraction Plan(Team Project)**](/files/cofr/cr)
+[![Open the notebook](https://img.shields.io/badge/Jupyter-Notebook-blueviolet?logo=Jupyter)](https://davinaliang.github.io/files/cofr/cr)
+- The project objective is to attract a national retailer and identify an optimal location for it in downtown Rochester with consideration of economic status, demographic attributes and business opportunities. The ultimate goal is to improve residents’ quality of life and increase the city’s employment opportunities, sales tax revenue, building occupancy, and retail offerings.
+![](/images/cofr.png)
 
 ---
 [**Next Yogurt Flavors to Launch(Team Project)**](/files/Design/Project2-Full.pdf)
@@ -75,6 +67,20 @@ author_profile: true
 [![Find more on Githhub](https://img.shields.io/badge/GitHub-GitHub-ff96b4?logo=Github)](https://github.com/DavinaLiang/DavinaLiang.github.io/blob/master/files/Design/Group22-Assignment3.Rmd)
 - The goal is to make recommendations about the toy horse product line. We first used regression to estimate the conjoint model at the individual level, and then explored the best market segmentations by conducting post-hoc clustering and priori segmentation analysis. Lastly, we simulated market shares for different product-line scenarios and identified the best possible product line strategy given considerations related to competitive response, cannibalization, profitability and long-run performance.
 ![](/images/horse.jpg)
+
+---
+[**Customer Targeting Study**](/files/customer/Customer_Targeting2)
+[![Open the notebook](https://img.shields.io/badge/Jupyter-Notebook-blueviolet?logo=Jupyter)](https://davinaliang.github.io/files/customer/Customer_Targeting2)
+[![Find more on Githhub](https://img.shields.io/badge/GitHub-GitHub-ff96b4?logo=Github)](https://github.com/DavinaLiang/DavinaLiang.github.io/blob/master/files/customer/Customer_Targeting.Rmd)
+- The general goal of this task is to distinguish potential high-value consumers and separate them from low-value consumers.
+![](/images/Screen Shot 2019-09-20 at 16.01.41.png)
+
+---
+[**Baltimore Crime Map**](/files/crime/Crime)
+[![Open the notebook](https://img.shields.io/badge/Jupyter-Notebook-blueviolet?logo=Jupyter)](https://davinaliang.github.io/files/crime/Crime)
+[![Find more on Githhub](https://img.shields.io/badge/GitHub-GitHub-ff96b4?logo=Github)](https://github.com/DavinaLiang/DavinaLiang.github.io/blob/master/files/crime/Crime_Codes.Rmd)
+- The goal of this project is to code up a simple system that reads and processes crime record data in the Baltimore Police Department, and visualizes crime location patterns depending on userspecified conditions.
+![](/images/Screen Shot 2019-09-22 at 13.21.42.png)
 
 ---
 [**911 Calls Data Analytics**](/files/911/911_Calls)
