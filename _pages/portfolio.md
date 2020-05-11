@@ -14,6 +14,18 @@ author_profile: true
 ![](/images/project.png)
 
 ---
+[**Detect Non-negative Tweets Towards Airlines**](/files/airline)
+[![Open the notebook](https://img.shields.io/badge/Jupyter-OPen_the_Notebook-9cf?logo=Jupyter)](https://davinaliang.github.io/files/airline)
+- A Sentiment analysis using tf-idf vectorizer and MultinomialNB Classifier.
+![](/images/sm.png)
+
+---
+[**Food Trend Detection by Co-occurence Matrix**](/files/trend)
+[![Open the notebook](https://img.shields.io/badge/Jupyter-OPen_the_Notebook-9cf?logo=Jupyter)](https://davinaliang.github.io/files/trend)
+- The purpose of this project is to help retailers see the rise and fall of certain categories of food before competitors do.
+![](/images/trend.jpg)
+
+---
 [**CNN for Visual Recognition**](/files/cad/cat_dog)
 [![Open the notebook](https://img.shields.io/badge/Jupyter-Notebook-blueviolet?logo=Jupyter)](https://davinaliang.github.io/files/cad/cat_dog)
 [![Find more on Github](https://img.shields.io/badge/GitHub-GitHub-ff96b4?logo=Github)](https://github.com/DavinaLiang/DavinaLiang.github.io/blob/master/files/cad/cat_dog.ipynb)  
@@ -26,18 +38,6 @@ author_profile: true
 [![Find more on Github](https://img.shields.io/badge/GitHub-GitHub-ff96b4?logo=Github)](https://github.com/DavinaLiang/DavinaLiang.github.io/blob/files/disaster_tweets/disaster.ipynb)  
 - The project is to predict which Tweets are about real disasters and which ones are not using recurrent neural network.
 ![](/images/disaster2.png)
-
----
-[**Detect Non-negative Tweets Towards Airlines**](/files/airline)
-[![Open the notebook](https://img.shields.io/badge/Jupyter-OPen_the_Notebook-9cf?logo=Jupyter)](https://davinaliang.github.io/files/airline)
-- A Sentiment analysis using tf-idf vectorizer and MultinomialNB Classifier.
-![](/images/sm.png)
-
----
-[**Food Trend Detection by Co-occurence Matrix**](/files/trend)
-[![Open the notebook](https://img.shields.io/badge/Jupyter-OPen_the_Notebook-9cf?logo=Jupyter)](https://davinaliang.github.io/files/trend)
-- The purpose of this project is to help retailers see the rise and fall of certain categories of food before competitors do.
-![](/images/trend.jpg)
 
 ---
 [**Housing Price Predictions**](/files//housing)
