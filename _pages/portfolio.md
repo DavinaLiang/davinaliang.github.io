@@ -26,6 +26,13 @@ author_profile: true
 ![](/images/trend.jpg)
 
 ---
+[**Trending YouTube Videos**](/files/YouTube/yt)
+[![Open the notebook](https://img.shields.io/badge/Jupyter-OPen_the_Notebook-9cf?logo=Jupyter)](https://davinaliang.github.io/files/YouTube/yt)
+[![Find more on Github](https://img.shields.io/badge/GitHub-GitHub-ff96b4?logo=Github)](https://github.com/DavinaLiang/DavinaLiang.github.io/blob/files/YouTube/yt.ipynb)
+- EDA for the trending youtube videos US dataset. Performed some NLP technique to deeply explore the contents of youtube videos, and showed some personal opinions.
+![](/images/yt.png)
+
+---
 [**CNN for Visual Recognition**](/files/cad/cat_dog)
 [![Open the notebook](https://img.shields.io/badge/Jupyter-Notebook-blueviolet?logo=Jupyter)](https://davinaliang.github.io/files/cad/cat_dog)
 [![Find more on Github](https://img.shields.io/badge/GitHub-GitHub-ff96b4?logo=Github)](https://github.com/DavinaLiang/DavinaLiang.github.io/blob/master/files/cad/cat_dog.ipynb)  
@@ -45,12 +52,6 @@ author_profile: true
 - The purpose of this project is to predict the final price of each home with 79 explanatory variables describing almost every aspect of residential homes in Ames, Iowa.
 ![](/images/house.jpg)
 
----
-[**Trending YouTube Videos**](/files/YouTube/yt)
-[![Open the notebook](https://img.shields.io/badge/Jupyter-OPen_the_Notebook-9cf?logo=Jupyter)](https://davinaliang.github.io/files/YouTube/yt)
-[![Find more on Github](https://img.shields.io/badge/GitHub-GitHub-ff96b4?logo=Github)](https://github.com/DavinaLiang/DavinaLiang.github.io/blob/files/YouTube/yt.ipynb)
-- EDA for the trending youtube videos US dataset. Performed some NLP technique to deeply explore the contents of youtube videos, and showed some personal opinions.
-![](/images/yt.png)
 
 ---
 ## Business Analytics Projects
