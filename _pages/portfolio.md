@@ -27,7 +27,7 @@ author_profile: true
 
 ---
 [**Trending YouTube Videos**](/files/ytb/ytb)
-[![Open the notebook](https://img.shields.io/badge/Jupyter-OPen_the_Notebook-9cf?logo=Jupyter)](https://davinaliang.github.io/files/ytb/ytb)
+[![Open the notebook](https://img.shields.io/badge/Jupyter-OPen_the_Notebook-9cf?logo=Jupyter)](https://davinaliang.github.io/files/ytb/ytb.html)
 [![Find more on Github](https://img.shields.io/badge/GitHub-GitHub-ff96b4?logo=Github)](https://github.com/DavinaLiang/DavinaLiang.github.io/blob/files/ytb/ytb.ipynb)
 - EDA for the trending youtube videos US dataset. Performed some NLP technique to deeply explore the contents of youtube videos, and showed some personal opinions.
 ![](/images/yt.png)
