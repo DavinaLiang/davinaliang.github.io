@@ -52,6 +52,12 @@ author_profile: true
 - The purpose of this project is to predict the final price of each home with 79 explanatory variables describing almost every aspect of residential homes in Ames, Iowa.
 ![](/images/house.jpg)
 
+---
+[**Google Play Rating Exploratory Data Analysis**](/files/google/Notebook)
+[![Open the notebook](https://img.shields.io/badge/Jupyter-OPen_the_Notebook-9cf?logo=Jupyter)](https://davinaliang.github.io/files/google/Notebook)
+[![Find more on Github](https://img.shields.io/badge/GitHub-GitHub-ff96b4?logo=Github)](https://github.com/DavinaLiang/DavinaLiang.github.io/blob/files/google/Notebook.ipynb)  
+- The purpose of this project is find out what kind of Andriod Apps are most likely to get high ratings in Google Play Store.
+![](/images/google.png)
 
 ---
 ## Business Analytics Projects
