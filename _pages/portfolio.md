@@ -9,7 +9,11 @@ author_profile: true
 
 [**Warren Buffett U.S. Stocks Portfolio**](https://davinaliang-first-streamlit-project-buffet-9rwx9x.streamlitapp.com/)
 - A simple data App created with streamlit to investigate the stocks held by Warren Buffet.
-https://user-images.githubusercontent.com/54601087/181458581-dca60091-6c63-4207-8674-5e6108e4f512.mp4
+
+
+https://user-images.githubusercontent.com/54601087/181459054-bfc0ec52-04b7-4db8-9032-90deaf75e1ad.mp4
+
+
 ---
 
 
