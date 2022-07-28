@@ -32,7 +32,8 @@ redirect_from:
 
 *Professional experience*
 ======
-* HSBC Software Dev, Ltd. (Global Technology Graduate Program Trainee) - Guangzhou, China                                                                 *  * 1st Rotation – Business Intelligence Engineer
+* HSBC Software Dev, Ltd. (Global Technology Graduate Program Trainee) - Guangzhou, China
+* 1st Rotation – Business Intelligence Engineer
 * Lead the E2E business intelligence project for credit & lending suite of Apps from business requirements gathering, metrics set-up, dimentional data model designing, dashboard development to production delivery:
   * Communicated with product owners across countries to analyze business requirements and build up metrics framework for key functions within the credit and lending journey by markets and time periods.
   * Designed and built analytical dashboards with Power BI to empower 8 different markets by monitoring the turn around time for each step of the credit and lending journey to improve the operational efficiency.
