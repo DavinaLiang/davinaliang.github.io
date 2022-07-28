@@ -3,7 +3,7 @@ layout: archive
 title: "Portfolio"
 permalink: /portfolio/
 author_profile: true
-
+---
 
 ## Data App
 
@@ -66,10 +66,9 @@ author_profile: true
 - The purpose of this project is find out what kind of Andriod Apps are most likely to get high ratings in Google Play Store.
 ![](/images/google.png)
 
----
+
 ## Business Analytics Projects
 
----
 [**National Chain Retailer Attraction Plan(Team Project)**](/files/cofr/cr)
 [![Open the notebook](https://img.shields.io/badge/Jupyter-Notebook-blueviolet?logo=Jupyter)](https://davinaliang.github.io/files/cofr/cr)
 - The project objective is to attract a national retailer and identify an optimal location for it in downtown Rochester with consideration of economic status, demographic attributes and business opportunities. The ultimate goal is to improve residents’ quality of life and increase the city’s employment opportunities, sales tax revenue, building occupancy, and retail offerings.
