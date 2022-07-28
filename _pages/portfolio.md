@@ -11,8 +11,6 @@ author_profile: true
 - A simple data App created with streamlit to investigate the stocks held by Warren Buffet.
 ![](/files/recording.mp4)
 
-https://user-images.githubusercontent.com/54601087/181459054-bfc0ec52-04b7-4db8-9032-90deaf75e1ad.mp4
-
 
 ---
 
