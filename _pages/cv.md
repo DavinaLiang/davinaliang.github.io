@@ -18,6 +18,7 @@ redirect_from:
 ======
 * City of Rochester(Marketing Data Analyst)
   * Consulted with Mayor's Office of Innovations & Strategic to craft a data-driven strategy to attract investment and increase economic diversity, with the ultimate goal to increase the city’s employment opportunities, sales tax revenue, building occupancy, and retail offerings.
+  * Consolidated data from Census Bureau and City by Python, established a deep neural network model to predict the optimal retailer, and identified the best site to start a new business.
 
 *Case Competitions*
 ======
@@ -31,6 +32,16 @@ redirect_from:
 
 *Professional experience*
 ======
+* HSBC Software Dev, Ltd. (Global Technology Graduate Program Trainee) - Guangzhou, China                                                                     * 1st Rotation – Business Intelligence Engineer
+    * Lead the E2E business intelligence project for credit & lending suite of Apps from business requirements gathering, metrics set-up, dimentional data model designing, dashboard development to production delivery:
+      •	Communicated with product owners across countries to analyze business requirements and build up metrics framework for key functions within the credit and lending journey by markets and time periods.
+      •	Designed and built analytical dashboards with Power BI to empower 8 different markets by monitoring the turn around time for each step of the credit and lending journey to improve the operational efficiency.
+      •	Refined the design, development and maintenance of the underlying data models, which highly improved the performance of the MI reports.
+      •	Participated in the entire development lifecycle: cooperated with DevOps specialist for version control and CI/CD pipeline setup, assisted with user-acceptance testing and defect tracking, worked with release team for application go-live, access control and permission management. 
+
+* Tencent (Data Analyst Intern) - Shenzhen, China                                                                                                             * Extracted core operational data by Hive and Spark based on billions of user behavior information.
+  * Cooperated with QQ browser product teams to analyze the data based on their business logic and requirements.
+
 * BMW Mobility Services, Ltd. (Operational & Marketing Intern) - Chengdu, China
   * Managed social media accounts to promote company’s product, winning two B2B orders for conference rentals.
   * Upgraded regular statistical work on daily usage of fuel cards; built a model to control average cost for each fleet and monitored driver behavior patterns.
