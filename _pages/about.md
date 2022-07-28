@@ -7,7 +7,7 @@ redirect_from:
   - /about/
   - /about.html
 ---
-*I am Jiawen from Master of Science in Business Analytics program at Simon Business School, University of Rochester seeking analytics opportunities. I'm not just finding a job, but pursuing a life-long career. There is still a long way to go.*
+*I am Jiawen Liang graduated from Master of Science in Business Analytics program at Simon Business School, University of Rochester seeking analytics opportunities. I'm not just finding a job, but pursuing a life-long career. There is still a long way to go.*
 <br />
 *Check out my [Portfolio](/portfolio.md)*
 
