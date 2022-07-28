@@ -4,22 +4,20 @@ title: "Portfolio"
 permalink: /portfolio/
 author_profile: true
 
----
+
 ## Data App
 
----
-[**Warren Buffett U.S. Stocks Portfolio**]
-[![Open the notebook](https://img.shields.io/badge/Jupyter-OPen_the_Notebook-9cf?logo=Jupyter)](https://davinaliang.github.io/files/Humana)
-- The purpose of this project is to identify patients likely to overuse opioids by using machine learning tools.
-![](/files/U.S. stocks owned by Warren Buffett · Streamlit.mp4)
-
-
----
-## Data Science Projects
-
----
 [**Warren Buffett U.S. Stocks Portfolio**](https://davinaliang-first-streamlit-project-buffet-9rwx9x.streamlitapp.com/)
 - A simple data App created with streamlit to investigate the stocks held by Warren Buffet.
+![](/files/U.S. stocks owned by Warren Buffett · Streamlit.mp4)
+---
+
+
+## Data Science Projects
+
+[**Humana-Mays Healthcare Analytics**](/files/Humana)
+[![Open the notebook](https://img.shields.io/badge/Jupyter-OPen_the_Notebook-9cf?logo=Jupyter)](https://davinaliang.github.io/files/Humana)
+- The purpose of this project is to identify patients likely to overuse opioids by using machine learning tools.
 ![](/images/project.png)
 
 ---
