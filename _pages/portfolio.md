@@ -11,8 +11,8 @@ author_profile: true
 - A simple data App created with streamlit to investigate the stocks held by Warren Buffet.
 ![](/files/recording.mp4)
 
-
-
+[**Insights & Analysis - My Stocks Portfolio **](https://davinaliang-financial-chart-u50hut.streamlit.app/)
+- Models to visualize chosen company's operating condition and market power.
 ---
 
 
