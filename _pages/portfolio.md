@@ -15,6 +15,7 @@ author_profile: true
 [**Insights & Analysis - My Stocks Portfolio**](https://davinaliang-financial-chart-u50hut.streamlit.app/)
 - Models to visualize chosen company's operating condition and market power.
 ![](/files/financial.png)
+
 ---
 
 
