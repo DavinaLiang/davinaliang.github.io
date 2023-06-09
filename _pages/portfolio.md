@@ -6,7 +6,7 @@ author_profile: true
 ---
 
 ## Data App
-[**Insights & Analysis - My Stocks Portfolio**](https://davinaliang-financial-chart-u50hut.streamlit.app/)
+[**Insights & Analysis - My Stocks Portfolio**](https://davinaliang-financial-chart-scbv4v.streamlit.app/)
 - Models to visualize chosen company's operating condition and market power.
 ![](/files/financial.png)
 
