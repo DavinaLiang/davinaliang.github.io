@@ -8,7 +8,7 @@ author_profile: true
 ## AI Agent Application
 [**AI-Powered Resume Optimization Tool**](https://gabi97-practice-projects.hf.space/)
 - An intelligent AI Agent application that analyzes job descriptions and resumes, identifies skill and experience gaps, generates content optimization plans, and rewrites resumes. Built with CrewAI, DeepSeek LLM, Pydantic, and Gradio for an end-to-end, interactive workflow with data-driven insights and visualized match scores.
-![](/files/crew.png)
+![](/files/crew.avif)
 
 ---
 
